@@ -110,6 +110,11 @@ public class PBXBuildPhase: PBXContainerItem {
 
 // MARK: - Helpers
 
+public enum PBXBuildPhaseError: Error, CustomStringConvertible {
+    let message : String
+    var description: String { message }
+}
+
 public extension PBXBuildPhase {
     /// Adds a file to a build phase, creating a proxy build file that points to the given file element.
     ///
@@ -134,7 +139,7 @@ public extension PBXBuildPhase {
        /// - Throws: an error if the file cannot be added.
        func remove(file: PBXFileElement) throws {
         guard let existing = files?.first(where: { $0.fileReference == file.reference })  else {
-            throw XCodeProjError.notFound(path: file.path ?? "no path to remove")
+            throw PBXBuildPhaseError( file.path ?? "no path to remove")
            }
            let projectObjects = try objects()
             projectObjects.delete(reference: file.reference)
