@@ -111,8 +111,8 @@ public class PBXBuildPhase: PBXContainerItem {
 // MARK: - Helpers
 
 public enum PBXBuildPhaseError: Error, CustomStringConvertible {
-    let message : String
-    var description: String { message }
+    public let message : String
+    public var description: String { message }
 }
 
 public extension PBXBuildPhase {
