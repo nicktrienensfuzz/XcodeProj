@@ -139,7 +139,7 @@ public extension PBXBuildPhase {
        /// - Throws: an error if the file cannot be added.
        func remove(file: PBXFileElement) throws {
         guard let existing = files?.first(where: { $0.fileReference == file.reference })  else {
-            throw PBXBuildPhaseError( file.path ?? "no path to remove")
+            throw PBXBuildPhaseError(message: file.path ?? "no path to remove")
            }
            let projectObjects = try objects()
             projectObjects.delete(reference: file.reference)
