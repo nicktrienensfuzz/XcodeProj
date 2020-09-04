@@ -126,6 +126,23 @@ public extension PBXBuildPhase {
         files?.append(buildFile)
         return buildFile
     }
+    
+    /// Adds a file to a build phase, creating a proxy build file that points to the given file element.
+       ///
+       /// - Parameter file: file element to be added to the build phase.
+       /// - Returns: proxy build file.
+       /// - Throws: an error if the file cannot be added.
+       func remove(file: PBXFileElement) throws -> PBXBuildFile {
+        guard let existing = files?.first(where: { $0.fileReference == file.reference })  else {
+               return file
+           }
+           let projectObjects = try objects()
+           projectObjects.delete(object: existing)
+            files?.removeAll(where: {
+                $0 == existing
+            })
+           return buildFile
+       }
 }
 
 // MARK: - Utils
