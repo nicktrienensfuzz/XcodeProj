@@ -132,16 +132,15 @@ public extension PBXBuildPhase {
        /// - Parameter file: file element to be added to the build phase.
        /// - Returns: proxy build file.
        /// - Throws: an error if the file cannot be added.
-       func remove(file: PBXFileElement) throws -> PBXBuildFile {
+       func remove(file: PBXFileElement) throws {
         guard let existing = files?.first(where: { $0.fileReference == file.reference })  else {
-            throw XCodeProjError.notFound(path: file.path)
+            throw XCodeProjError.notFound(path: file.path ?? "no path to remove")
            }
            let projectObjects = try objects()
-           projectObjects.delete(object: existing)
+            projectObjects.delete(reference: file.reference)
             files?.removeAll(where: {
                 $0 == existing
             })
-           return buildFile
        }
 }
 
