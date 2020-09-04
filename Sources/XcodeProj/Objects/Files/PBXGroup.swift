@@ -140,6 +140,33 @@ public extension PBXGroup {
         }
     }
 
+    /// Creates a group with the given name and returns it.
+    ///
+    /// - Parameters:
+    ///   - groupName: group name.
+    ///   - options: creation options.
+    /// - Returns: created groups.
+    @discardableResult
+    func removeGroup(_ group: PBXGroup) throws {
+        let objects = try self.objects()
+        print(objects)
+        guard let existing = objects.groups.values.first(where: { $0.uuid == group.uuid }) else {
+            throw PBXBuildPhaseError(message: "No sub-group found")
+        }
+        objects.delete(reference: existing)
+        childrenReferences.removeAll(where: { $0.uuid == existing.uuid})
+
+//
+//        return groupName.components(separatedBy: "/").reduce(into: [PBXGroup]()) { groups, name in
+//            let group = groups.last ?? self
+//            let newGroup = PBXGroup(children: [], sourceTree: .group, name: name, path: options.contains(.withoutFolder) ? nil : name)
+//            newGroup.parent = self
+//            group.childrenReferences.append(newGroup.reference)
+//            objects.add(object: newGroup)
+//            groups.append(newGroup)
+//        }
+    }
+    
     /// Creates a variant group with the given name and returns it.
     ///
     /// - Parameters:
