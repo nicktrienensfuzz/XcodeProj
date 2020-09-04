@@ -154,7 +154,7 @@ public extension PBXGroup {
             throw PBXBuildPhaseError(message: "No sub-group found")
         }
         objects.delete(reference: existing.reference)
-        childrenReferences.removeAll(where: { $0.object?.uuid == existing.uuid})
+        childrenReferences.removeAll(where: { $0.getObject()?.uuid == existing.uuid})
 
     }
     
