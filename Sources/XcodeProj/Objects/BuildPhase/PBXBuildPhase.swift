@@ -110,7 +110,7 @@ public class PBXBuildPhase: PBXContainerItem {
 
 // MARK: - Helpers
 
-public enum PBXBuildPhaseError: Error, CustomStringConvertible {
+public struct PBXBuildPhaseError: Error, CustomStringConvertible {
     public let message : String
     public var description: String { message }
 }
